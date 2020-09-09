@@ -1,0 +1,17 @@
+
+def factorial_1(n):           #factorial 재귀 안쓰고
+  result = 1                #초기 결과값은 1로 설정
+  for i in range(1,n+1):    #1부터 n까지
+    result *= i             #곱셈을 반복한다
+  return result             #결과값 리턴
+
+print(factorial_1(10))        #출력
+
+
+def factorial_2(n):                   #factorial함수정의
+    if n <= 1:                      #n이 1보다 같거나 작을 경우(탈출지점)
+        return 1                    #1을 반환(곱셈이므로)
+    else:                           #n이 다른 수일경우
+        return n *factorial(n-1)    #n에 n-1까지의 factorial함수값을 곱함(재귀호출)
+
+print(factorial_2(10))                #출력
