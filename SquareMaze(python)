@@ -1,0 +1,35 @@
+from collections import deque
+
+#n과 m을 입력받기
+n,m = map(int, input().split())
+
+#2차원 리스트 맵 정보 입력받기
+graph = []
+for i in range(n):
+  graph.append(list(map(int,input())))
+
+#이동 방향 설정(상,하,좌,우로)
+dx = [-1,1,0,0]
+dy = [0,0,-1,1]
+
+###BFS 구현 - 함수형태로
+def bfs(x,y):
+  queue = deque()
+  queue.append((x,y))
+  while queue:        #탈출지점(0이 되는순간 탈출)
+    x,y = queue.popleft() #첫번째 값은 일단 빼고, 그 값을 기준으로 아래 반복문을 수행한다
+    for i in range(4):  #상하좌우 위치를 확인하는 작업
+      nx = x + dx[i]  #nx는 기준x에서 dx위치값을 더한 값(이동된 값)
+      ny = y + dy[i]  #ny는 기준y에서 dy위치값을 더한 값(이동된 값)
+      if (nx <0 or nx >= n or ny < 0 or ny >= m): #범위안에 이동된 값이 없으면(미로 안이 아니면) 무시
+        continue
+      if graph[nx][ny] == 0:  #주변 노드가 0이면(괴물이면) 무시
+        continue
+      if graph[nx][ny] == 1:  #주변 노드가 1이면(처음 방문하는 통행로면) 1을 더한다(거리 표시)
+        graph[nx][ny] = graph[x][y] + 1
+        queue.append((nx,ny))
+        
+  return graph[n-1][m-1]  #마지막 지점 -> (마지막 지점에 있는 숫자값이 거리값)
+
+#BFS결과 출력
+print(bfs(0,0)) #시작 지점은 첫번째 지점으로 고정되어 있다
